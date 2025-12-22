@@ -1,6 +1,6 @@
 package regexp;
 
-import org.eclipse.jdt.internal.compiler.ast.Pattern;
+import java.util.regex.Pattern;
 
 public class RegularExpressionSample {
 

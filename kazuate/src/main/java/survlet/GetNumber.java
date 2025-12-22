@@ -31,11 +31,11 @@ public class GetNumber extends HttpServlet {
 		}else {
 			msg = "小さすぎます";
 		}
-		response.setContentType("text/html; charser=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html><html><body>");
 		out.println("<p>" + msg + "</p>");
-		put.println("<a href='index.jsp'>もどる</a>");
+		out.println("<a href='index.jsp'>もどる</a>");
 		out.println("</body><html>");
 		
 		

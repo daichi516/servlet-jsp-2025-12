@@ -8,9 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import model.Health;
-import model.HealthCheckLogic;
 @WebServlet("/HealthCheck")
 public class HealthCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,17 +18,19 @@ public class HealthCheck extends HttpServlet {
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String weight = request.getParameter("weight");
-		String height = request.getParameter("height");
-		Health health = new Health();
-		health.setHeight(Double.parseDouble(height));
-		health.setWeight(Double.parseDouble(weight));
+		double weight = Double.parseDouble(request.getParameter("weight"));
+		double height = Double.parseDouble(request.getParameter("height"));
+		///リクエストパラメーター取得
+		height = height / 100.0;
+		double bmi = weight / (height * height);
+		String bodyType = "";
+		if(bmi < 18.5) { bodyType = "痩せ型";}
+		else if (bmi < 25) { bodyType = "普通";}
+		else { bodyType = "肥満";}
 		
-		HealthCheckLogic healthCheckLogic = new HealthCheckLogic();
-		healthCheckLogic.execute(health);
-		
-		request.setAttribute("health", health);
-		String url = "WEB-INF/jsp/healthCheckResult.jsp";
+		request.setAttribute("bmi", bmi);
+		request.setAttribute("bodyType", bodyType);
+		String url = "/WEB-INF/jsp/healthCheckResult.jsp";
 		RequestDispatcher d = request.getRequestDispatcher(url);
 		d.forward(request, response);
 	}
